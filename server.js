@@ -1,30 +1,32 @@
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const connectDB = require('./config/db');
-const authRoutes = require('./routes/authRoutes');
-const protectedRoutes = require('./routes/protectedRoutes');
-const cookieParser = require('cookie-parser');
-
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const connectDB = require("./config/db");
+const authRoutes = require("./routes/authRoutes");
+const protectedRoutes = require("./routes/protectedRoutes");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 const app = express();
-const morgan = require('morgan');
-
+const morgan = require("morgan");
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "http://localhost:3000", // your frontend URL
+    credentials: true,
+  })
+);
 app.use(express.json());
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(cookieParser());
-
 
 // DB Connection
 connectDB();
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/protected', protectedRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/protected", protectedRoutes);
 
 // Start Server
 const PORT = process.env.PORT || 5000;

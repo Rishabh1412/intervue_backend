@@ -8,9 +8,9 @@ const generateOTP = () =>
   Math.floor(100000 + Math.random() * 900000).toString();
 
 exports.register = async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
 
-  try {
+  try {c
     const existing = await User.findOne({ email });
     if (existing) return res.status(400).json({ msg: "User already exists" });
 
@@ -18,6 +18,7 @@ exports.register = async (req, res) => {
     const otp = generateOTP();
 
     const user = new User({
+      name,
       email,
       password: hashed,
       otp,
