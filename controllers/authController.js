@@ -10,7 +10,7 @@ const generateOTP = () =>
 exports.register = async (req, res) => {
   const { name, email, password } = req.body;
 
-  try {c
+  try {
     const existing = await User.findOne({ email });
     if (existing) return res.status(400).json({ msg: "User already exists" });
 
@@ -90,11 +90,11 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = async (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer "))
-    return res.status(401).json({ msg: "No token provided" });
+  const token = req.cookies.token; // Get token from HTTP-only cookie
 
-  const token = authHeader.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ msg: "No token found in cookie" });
+  }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);

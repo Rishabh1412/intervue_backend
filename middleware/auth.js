@@ -4,10 +4,10 @@ const BlacklistedToken = require('../models/BlacklistedToken');
 const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization;
   
-  if (!authHeader || !authHeader.startsWith('Bearer '))
-    return res.status(401).json({ msg: 'No token provided' });
+  // if (!authHeader || !authHeader.startsWith('Bearer '))
+  //   return res.status(401).json({ msg: 'No token provided' });
 
-  const token = authHeader.split(' ')[1] || req.cookies.token || localStorage.getItem('token');
+  const token = req.cookies.token || authHeader.split(' ')[1] || localStorage.getItem('token');
 
   const isBlacklisted = await BlacklistedToken.findOne({ token });
   if (isBlacklisted) return res.status(401).json({ msg: 'Token has been blacklisted' });
