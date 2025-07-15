@@ -55,6 +55,7 @@ exports.verifyOTP = async (req, res) => {
       secure: true, // 🔒 required for HTTPS (Render + Vercel use HTTPS)
       sameSite: "None", // 🔥 required for cross-origin cookies
       maxAge: 3600000, // 1 hour
+      path: "/"
     });
 
     res.json({ msg: "Verified", token });
@@ -81,6 +82,7 @@ exports.login = async (req, res) => {
       secure: true, // 🔒 required for HTTPS (Render + Vercel use HTTPS)
       sameSite: "None", // 🔥 required for cross-origin cookies
       maxAge: 3600000, // 1 hour
+      path: "/"
     });
 
     res.json({ token });
