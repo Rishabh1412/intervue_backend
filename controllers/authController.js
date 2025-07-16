@@ -52,7 +52,7 @@ exports.verifyOTP = async (req, res) => {
     });
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true, // 🔒 required for HTTPS (Render + Vercel use HTTPS)
+      secure: process.env.NODE_ENV === "production", // 🔒 required for HTTPS (Render + Vercel use HTTPS)
       sameSite: "None", // 🔥 required for cross-origin cookies
       maxAge: 3600000, // 1 hour
       path: "/"
@@ -79,7 +79,7 @@ exports.login = async (req, res) => {
     });
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true, // 🔒 required for HTTPS (Render + Vercel use HTTPS)
+      secure: process.env.NODE_ENV === "production", // 🔒 required for HTTPS (Render + Vercel use HTTPS)
       sameSite: "None", // 🔥 required for cross-origin cookies
       maxAge: 3600000, // 1 hour
       path: "/"
@@ -106,7 +106,8 @@ exports.logout = async (req, res) => {
     res.clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: "None",
+      path: "/"
     });
     res.json({ msg: "Logged out successfully" });
   } catch (err) {
