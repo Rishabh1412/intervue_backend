@@ -7,7 +7,7 @@ const authMiddleware = async (req, res, next) => {
   // if (!authHeader || !authHeader.startsWith('Bearer '))
   //   return res.status(401).json({ msg: 'No token provided' });
 
-  const token = req.cookies.token || authHeader.split(' ')[1] || localStorage.getItem('token');
+  const token = req.cookies.token || authorization?.split(" ")[1];
 
   const isBlacklisted = await BlacklistedToken.findOne({ token });
   if (isBlacklisted) return res.status(401).json({ msg: 'Token has been blacklisted' });
