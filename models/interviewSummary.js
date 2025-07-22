@@ -37,7 +37,7 @@ const interviewSummarySchema = new mongoose.Schema({
   },
   level: {
     type: String,
-    enum: ['Easy', 'Medium', 'Hard'],
+    enum: ['Junior', 'Mid', 'Senior'],
     required: true
   },
   interviewType: {

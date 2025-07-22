@@ -36,7 +36,7 @@ exports.saveInterviewSummary = async (req, res) => {
 
 exports.getUserInterviewSummaries = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     const summaries = await InterviewSummary.find({ userId }).sort({ createdAt: -1 });
 
